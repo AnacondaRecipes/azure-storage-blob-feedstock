@@ -1,28 +1,31 @@
 {% set name = "azure-storage-blob" %}
-{% set version = "12.9.0" %}
+{% set version = "12.19.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.zip
-  sha256: cff66a115c73c90e496c8c8b3026898a3ce64100840276e9245434e28a864225
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 26c0a4320a34a3c2a1b74528ba6812ebcb632a04cd67b1c7377232c4b01a5897
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . --no-deps -vv
+  skip: true  # [py<37]
+  script: {{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation
 
 requirements:
   host:
-    - python >=2.7
+    - python
     - pip
+    - setuptools
+    - wheel
   run:
-    - python >=2.7
-    - azure-core <2.0.0,>=1.9.0
+    - python
+    - azure-core <2.0.0,>=1.28.0
     - cryptography >=2.1.4
-    - msrest >=0.6.10
+    - typing-extensions >=4.3.0
+    - isodate >=0.6.1
 
 test:
   imports:
@@ -35,8 +38,12 @@ test:
 about:
   home: https://pypi.org/project/azure-storage-blob/
   summary: Microsoft Azure Blob Storage Client Library for Python
+  description: Azure Blob storage is Microsoft's object storage solution for the cloud. Blob storage is optimized for storing massive amounts of unstructured data, such as text or binary data.
   license: MIT
-  license_file: LICENSE.txt
+  license_family: MIT
+  license_file: LICENSE
+  dev_url: https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/storage/azure-storage-blob/azure/storage/blob
+  doc_url: https://learn.microsoft.com/en-us/python/api/azure-storage-blob/?view=azure-python
 
 extra:
   recipe-maintainers:

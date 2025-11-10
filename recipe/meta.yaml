@@ -28,18 +28,24 @@ requirements:
     - isodate >=0.6.1
     - typing_extensions >=4.6.0
 
+# To run these tests you need to have devtools_testutils package which is a part of azure-sdk repository
 test:
   imports:
+    - azure
+    - azure.storage
     - azure.storage.blob
+    - azure.storage.blob.aio
   commands:
     - pip check
   requires:
     - pip
 
 about:
-  home: https://pypi.org/project/azure-storage-blob/
+  home: https://pypi.org/project/azure-storage-blob
   summary: Microsoft Azure Blob Storage Client Library for Python
-  description: Azure Blob storage is Microsoft's object storage solution for the cloud. Blob storage is optimized for storing massive amounts of unstructured data, such as text or binary data.
+  description: |
+    Azure Blob storage is Microsoft's object storage solution for the cloud.
+    Blob storage is optimized for storing massive amounts of unstructured data, such as text or binary data.
   license: MIT
   license_family: MIT
   license_file: LICENSE

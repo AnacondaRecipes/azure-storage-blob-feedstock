@@ -1,18 +1,18 @@
 {% set name = "azure-storage-blob" %}
-{% set version = "12.27.1" %}
+{% set version = "12.28.0b1" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/a/azure-storage-blob/azure_storage_blob-12.27.1.tar.gz
-  sha256: a1596cc4daf5dac9be115fcb5db67245eae894cf40e4248243754261f7b674a6
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
+  sha256: 76fcb4e91c8f0f36678534b35c9b22795266f1426572307812d04d1abc868fd8
 
 build:
   number: 0
-  skip: true  # [py<39]
   script: {{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation
+  skip: true  # [py<39]
 
 requirements:
   host:
@@ -24,17 +24,16 @@ requirements:
     - python
     - azure-core >=1.30.0
     - cryptography >=2.1.4
-    - typing-extensions >=4.3.0
-    - isodate >=0.6.1
     - typing_extensions >=4.6.0
+    - isodate >=0.6.1
+  run_constrained:
+    # azure-core[aio]>=1.30.0 -> https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/core/azure-core/pyproject.toml#L32
+    - aiohttp >=3.0
 
 # To run these tests you need to have devtools_testutils package which is a part of azure-sdk repository
 test:
   imports:
-    - azure
-    - azure.storage
     - azure.storage.blob
-    - azure.storage.blob.aio
   commands:
     - pip check
   requires:

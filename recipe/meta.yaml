@@ -1,7 +1,6 @@
 {% set name = "azure-storage-blob" %}
 {% set version = "12.31.0" %}
 
-# To run these tests you need to have devtools_testutils package which is a part of azure-sdk repository
 package:
   name: {{ name }}
   version: {{ version }}
@@ -32,6 +31,7 @@ requirements:
     - aiohttp >=3.0
     - azure-storage-extensions >=0.1.0,<1.0.0
 
+# To run these tests you need to have devtools_testutils package which is a part of azure-sdk repository
 test:
   imports:
     - azure.storage.blob
